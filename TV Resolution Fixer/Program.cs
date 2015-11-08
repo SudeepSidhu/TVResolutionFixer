@@ -28,6 +28,21 @@ namespace TV_Resolution_Fixer
 
         static void Main(string[] args)
         {
+            bool shouldWait = true;
+
+            foreach (string arg in args)
+            {
+                switch (arg.Substring(0, 2).ToLower())
+                {
+                    case "/q":
+                        shouldWait = false;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
             if (File.Exists(iniPath))
             {
                 string fullIniPath = Path.Combine(System.IO.Path.GetDirectoryName(Application.ExecutablePath).ToString(), iniPath);
@@ -52,6 +67,11 @@ namespace TV_Resolution_Fixer
             else
             {
                 Console.WriteLine(iniPath + " not found. Please move this program in to the Bin folder of the Tribes Installation");
+            }
+
+            if (shouldWait)
+            {
+                System.Threading.Thread.Sleep(15 * 1000);
             }
         }
     }
